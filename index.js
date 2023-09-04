@@ -134,4 +134,72 @@ class List {
 
         return string;
     }
+
+    insertAt(val, index) {
+        const newNode = new Node(val);
+
+        let lastNode = this.head;
+        let currentNode = this.head.nextNode;
+        let i = 1;
+
+        if (this.head === null) {
+            this.head = newNode;
+            this.tail = newNode;
+        } else if (index === 0) {
+            newNode.nextNode = this.head;
+            this.head = newNode;
+        } else {
+            while (currentNode.nextNode !== null) {
+                if (index === i) {
+                    newNode.nextNode = currentNode;
+                    lastNode.nextNode = newNode;
+                }
+
+                i++;
+                lastNode = lastNode.nextNode;
+                currentNode = currentNode.nextNode;
+            }
+
+            if (index === i) {
+                currentNode.nextNode = newNode;
+                this.tail = newNode;
+            }
+        }  
+    }
+
+    removeAt(index) {
+        let lastNode = this.head;
+        let currentNode = this.head.nextNode;
+        let i = 1;
+        
+        if (index === 0) {
+            this.head = this.head.nextNode;
+        } else {
+            while (currentNode.nextNode !== null) {
+                if (index === i) {
+                    lastNode.nextNode = currentNode.nextNode;
+                }
+
+                lastNode = lastNode.nextNode;
+                currentNode = currentNode.nextNode;
+                i++;
+            }
+
+            if (index === i) {
+                lastNode.nextNode = null;
+                this.tail = lastNode;
+            }
+        }
+    }
 }
+
+const linkedList = new List();
+
+linkedList.append('qwe');
+linkedList.append('asd');
+linkedList.append('end');
+linkedList.prepend('start');
+
+linkedList.removeAt(3);
+console.log(linkedList.toString());
+console.log(linkedList.listTail());
